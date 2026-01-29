@@ -7,7 +7,7 @@ _, test_dataset = load_mnist()
 
 # Load trained model
 nn = NeuralNetwork()
-# nn.load("mnist_weights.npy")   # uncomment if you saved weights
+nn.load("mnist_model.npz")   # uncomment if you saved weights
 
 # Pick any test image
 index = int(input("Enter MNIST test image index (0-9999): "))

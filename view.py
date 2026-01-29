@@ -33,6 +33,7 @@ print(f"Saved {NUM_IMAGES} images to {CSV_FILE}")
 # -------------------------------
 # Visualize images
 # -------------------------------
+
 print("Displaying images...")
 
 plt.figure(figsize=(10, 4))

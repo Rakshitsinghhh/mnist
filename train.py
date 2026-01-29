@@ -2,11 +2,13 @@ import numpy as np
 from neural_network import NeuralNetwork
 from data_Loader import load_mnist
 
+GREEN = "\033[92m"
+RED   = "\033[91m"
 # -------------------------------
 # Hyperparameters
 # -------------------------------
-EPOCHS = 3
-LEARNING_RATE = 0.1   # ↓ lower = more stable
+EPOCHS = 20
+LEARNING_RATE = 0.008
 MODEL_PATH = "mnist_model.npz"
 
 # -------------------------------
@@ -23,7 +25,7 @@ print(f"Test samples: {len(test_dataset)}")
 nn = NeuralNetwork()
 
 # -------------------------------
-# Training loop
+# Training
 # -------------------------------
 print("\nStarting training...\n")
 
@@ -36,36 +38,35 @@ for epoch in range(EPOCHS):
         X = image.numpy().reshape(1, 784)
         y = label
 
-        # Forward
         output = nn.forward(X)
         prediction = np.argmax(output)
 
         if prediction == y:
             correct += 1
 
-        # Learn
-        nn.backward(X, y, lr=LEARNING_RATE)
+        nn.backward(X, y, LEARNING_RATE)
 
     accuracy = (correct / len(train_dataset)) * 100
-    print(f"Epoch {epoch + 1}/{EPOCHS} - Training Accuracy: {accuracy:.2f}%")
+    
+    if accuracy < best_accuracy:
+        color = RED
+        
+    else:
+        color = GREEN
+    print(f"Epoch {epoch+1}/{EPOCHS} - Training Accuracy: {color}{accuracy:.2f}%")
 
-    # ✅ Save best model
     if accuracy > best_accuracy:
         best_accuracy = accuracy
         nn.save(MODEL_PATH)
         print("✓ Best model saved")
 
 # -------------------------------
-# Load best model before testing
+# Testing
 # -------------------------------
-print("\nLoading best trained model for testing...\n")
+print("\nLoading best model for testing...\n")
 nn.load(MODEL_PATH)
 
-# -------------------------------
-# Testing loop
-# -------------------------------
 correct = 0
-
 for image, label in test_dataset:
     X = image.numpy().reshape(1, 784)
     output = nn.forward(X)

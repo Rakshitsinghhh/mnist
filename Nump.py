@@ -3,8 +3,6 @@ from neural_network import NeuralNetwork
 from data_Loader import load_mnist  # Updated import name (with underscore)
 
 
-
-
 # Step 1: Load MNIST dataset
 print("Loading MNIST dataset...")
 train_dataset, test_dataset = load_mnist()
@@ -17,7 +15,7 @@ nn = NeuralNetwork()
 
 
 # Step 3: Pick a few MNIST samples for testing (let's take 5)
-num_samples = 5
+num_samples = 10
 print(f"\nTesting with {num_samples} samples from training set:")
 
 for i in range(num_samples):
@@ -47,8 +45,20 @@ for i in range(num_samples):
     nn.backward(X, y, lr=0.01)
     print("✓ Backward pass executed successfully!")
     
-print("the counter is" , count)
 
+print("the counter is" , count)
+print()
+
+    
 print(f"\n{'='*50}")
-print("All tests completed successfully!")
+if count< num_samples:
+    print("model is untrained")
+    
+else:
+    print("model is trained")
+    
+accuracy = (num_samples - count)
+print(count*100)
+    
+    
 print(f"{'='*50}")
